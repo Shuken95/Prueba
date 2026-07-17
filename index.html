@@ -22,9 +22,9 @@
         <div class="status-bar">
             <span class="status-time" id="statusTime">9:41</span>
             <div class="status-icons">
-                <span>📶</span>
-                <span>📡</span>
-                <span>🔋</span>
+                <svg class="status-icon" viewBox="0 0 24 24"><use href="icons/svg/signal.svg"/></svg>
+                <svg class="status-icon" viewBox="0 0 24 24"><use href="icons/svg/wifi.svg"/></svg>
+                <svg class="status-icon" viewBox="0 0 24 24"><use href="icons/svg/battery.svg"/></svg>
             </div>
         </div>
 
@@ -59,7 +59,10 @@
                             <div class="progress-bar">
                                 <div class="progress-fill progress-water" style="width: 60%"></div>
                             </div>
-                            <button class="add-water-btn" onclick="addWater()">+ Añadir 250ml</button>
+                            <button class="add-water-btn" onclick="addWater()">
+                                <svg class="btn-icon" viewBox="0 0 24 24"><use href="icons/svg/plus.svg"/></svg>
+                                Añadir 250ml
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -128,7 +131,7 @@
                         </div>
                     </div>
                     <div class="meal-suggestion">
-                        <span>🍽️</span>
+                        <svg class="suggestion-icon" viewBox="0 0 24 24"><use href="icons/svg/meals.svg"/></svg>
                         <span>Próxima comida: Pollo al limón + quinoa</span>
                     </div>
                 </div>
@@ -142,12 +145,15 @@
                 </div>
 
                 <button class="add-meal-btn" onclick="openAddMealModal()">
-                    <span>+</span> Registrar Nueva Comida
+                    <svg class="btn-icon" viewBox="0 0 24 24"><use href="icons/svg/plus.svg"/></svg>
+                    Registrar Nueva Comida
                 </button>
 
                 <div class="meals-list" id="mealsList">
                     <div class="meal-card" data-meal="breakfast">
-                        <div class="meal-icon">🌅</div>
+                        <div class="meal-icon">
+                            <svg viewBox="0 0 24 24"><use href="icons/svg/sun.svg"/></svg>
+                        </div>
                         <div class="meal-info">
                             <h3>Desayuno</h3>
                             <p>Avena con frutas, café negro</p>
@@ -157,7 +163,9 @@
                     </div>
 
                     <div class="meal-card" data-meal="lunch">
-                        <div class="meal-icon">☀️</div>
+                        <div class="meal-icon">
+                            <svg viewBox="0 0 24 24"><use href="icons/svg/lunch.svg"/></svg>
+                        </div>
                         <div class="meal-info">
                             <h3>Almuerzo</h3>
                             <p>Ensalada César con pollo</p>
@@ -167,7 +175,9 @@
                     </div>
 
                     <div class="meal-card" data-meal="snack">
-                        <div class="meal-icon">🥜</div>
+                        <div class="meal-icon">
+                            <svg viewBox="0 0 24 24"><use href="icons/svg/snack.svg"/></svg>
+                        </div>
                         <div class="meal-info">
                             <h3>Snack</h3>
                             <p>Yogur griego con nueces</p>
@@ -177,7 +187,9 @@
                     </div>
 
                     <div class="meal-card" data-meal="dinner">
-                        <div class="meal-icon">🌙</div>
+                        <div class="meal-icon">
+                            <svg viewBox="0 0 24 24"><use href="icons/svg/dinner.svg"/></svg>
+                        </div>
                         <div class="meal-info">
                             <h3>Cena</h3>
                             <p>Salmón a la parrilla, brócoli</p>
@@ -212,28 +224,39 @@
                             <span class="exercise-sets">3x12</span>
                         </div>
                     </div>
-                    <button class="start-workout-btn" onclick="startWorkout()">▶ Iniciar Entrenamiento</button>
+                    <button class="start-workout-btn" onclick="startWorkout()">
+                        <svg class="btn-icon" viewBox="0 0 24 24"><use href="icons/svg/play.svg"/></svg>
+                        Iniciar Entrenamiento
+                    </button>
                 </div>
 
                 <h2 class="section-title">Categorías</h2>
                 <div class="categories-grid">
                     <div class="category-card category-cardio" onclick="showCategory('cardio')">
-                        <div class="category-icon">🏃</div>
+                        <div class="category-icon">
+                            <svg viewBox="0 0 24 24"><use href="icons/svg/cardio.svg"/></svg>
+                        </div>
                         <h3>Cardio</h3>
                         <span>12 rutinas</span>
                     </div>
                     <div class="category-card category-strength" onclick="showCategory('strength')">
-                        <div class="category-icon">💪</div>
+                        <div class="category-icon">
+                            <svg viewBox="0 0 24 24"><use href="icons/svg/strength.svg"/></svg>
+                        </div>
                         <h3>Fuerza</h3>
                         <span>18 rutinas</span>
                     </div>
                     <div class="category-card category-flex" onclick="showCategory('flex')">
-                        <div class="category-icon">🧘</div>
+                        <div class="category-icon">
+                            <svg viewBox="0 0 24 24"><use href="icons/svg/flex.svg"/></svg>
+                        </div>
                         <h3>Flexibilidad</h3>
                         <span>8 rutinas</span>
                     </div>
                     <div class="category-card category-balance" onclick="showCategory('balance')">
-                        <div class="category-icon">⚖️</div>
+                        <div class="category-icon">
+                            <svg viewBox="0 0 24 24"><use href="icons/svg/balance.svg"/></svg>
+                        </div>
                         <h3>Equilibrio</h3>
                         <span>6 rutinas</span>
                     </div>
@@ -308,7 +331,7 @@
                         <span class="stress-status">Bien</span>
                     </div>
                     <div class="stress-recommendation">
-                        <span>🧘</span>
+                        <svg class="rec-icon" viewBox="0 0 24 24"><use href="icons/svg/meditate.svg"/></svg>
                         <span>Recomendado: Meditación 10 min</span>
                     </div>
                 </div>
@@ -389,7 +412,7 @@
                 <h2 class="section-title">Configuración</h2>
 
                 <div class="glass-card setting-card" onclick="toggleSetting(this)">
-                    <span class="setting-icon">🔔</span>
+                    <svg class="setting-icon-svg" viewBox="0 0 24 24"><use href="icons/svg/bell.svg"/></svg>
                     <span class="setting-label">Notificaciones</span>
                     <div class="toggle-switch active">
                         <div class="toggle-knob"></div>
@@ -397,13 +420,13 @@
                 </div>
 
                 <div class="glass-card setting-card" onclick="toggleSetting(this)">
-                    <span class="setting-icon">📏</span>
+                    <svg class="setting-icon-svg" viewBox="0 0 24 24"><use href="icons/svg/ruler.svg"/></svg>
                     <span class="setting-label">Unidades de Medida</span>
-                    <span class="setting-arrow">›</span>
+                    <svg class="setting-arrow-svg" viewBox="0 0 24 24"><use href="icons/svg/arrow.svg"/></svg>
                 </div>
 
                 <div class="glass-card setting-card" onclick="toggleSetting(this)">
-                    <span class="setting-icon">🌙</span>
+                    <svg class="setting-icon-svg" viewBox="0 0 24 24"><use href="icons/svg/moon.svg"/></svg>
                     <span class="setting-label">Modo Oscuro</span>
                     <div class="toggle-switch active">
                         <div class="toggle-knob"></div>
@@ -416,23 +439,23 @@
         <!-- Bottom Navigation -->
         <nav class="bottom-nav">
             <button class="nav-item active" data-screen="home" onclick="switchScreen('home')">
-                <span class="nav-icon">🏠</span>
+                <svg class="nav-icon-svg" viewBox="0 0 24 24"><use href="icons/svg/home.svg"/></svg>
                 <span class="nav-label">Inicio</span>
             </button>
             <button class="nav-item" data-screen="meals" onclick="switchScreen('meals')">
-                <span class="nav-icon">🍽️</span>
+                <svg class="nav-icon-svg" viewBox="0 0 24 24"><use href="icons/svg/meals.svg"/></svg>
                 <span class="nav-label">Comidas</span>
             </button>
             <button class="nav-item" data-screen="exercise" onclick="switchScreen('exercise')">
-                <span class="nav-icon">💪</span>
+                <svg class="nav-icon-svg" viewBox="0 0 24 24"><use href="icons/svg/exercise.svg"/></svg>
                 <span class="nav-label">Ejercicio</span>
             </button>
             <button class="nav-item" data-screen="health" onclick="switchScreen('health')">
-                <span class="nav-icon">❤️</span>
+                <svg class="nav-icon-svg" viewBox="0 0 24 24"><use href="icons/svg/health.svg"/></svg>
                 <span class="nav-label">Salud</span>
             </button>
             <button class="nav-item" data-screen="profile" onclick="switchScreen('profile')">
-                <span class="nav-icon">👤</span>
+                <svg class="nav-icon-svg" viewBox="0 0 24 24"><use href="icons/svg/profile.svg"/></svg>
                 <span class="nav-label">Perfil</span>
             </button>
         </nav>

@@ -9,30 +9,26 @@ const AppState = {
     carbs: 142,
     fats: 48,
     meals: [
-        { type: 'breakfast', name: 'Desayuno', desc: 'Avena con frutas, café negro', time: '7:30 AM', calories: 420, icon: '🌅' },
-        { type: 'lunch', name: 'Almuerzo', desc: 'Ensalada César con pollo', time: '1:00 PM', calories: 580, icon: '☀️' },
-        { type: 'snack', name: 'Snack', desc: 'Yogur griego con nueces', time: '4:30 PM', calories: 180, icon: '🥜' },
-        { type: 'dinner', name: 'Cena', desc: 'Salmón a la parrilla, brócoli', time: '8:00 PM', calories: 520, icon: '🌙' }
+        { type: 'breakfast', name: 'Desayuno', desc: 'Avena con frutas, café negro', time: '7:30 AM', calories: 420, icon: 'sun' },
+        { type: 'lunch', name: 'Almuerzo', desc: 'Ensalada César con pollo', time: '1:00 PM', calories: 580, icon: 'lunch' },
+        { type: 'snack', name: 'Snack', desc: 'Yogur griego con nueces', time: '4:30 PM', calories: 180, icon: 'snack' },
+        { type: 'dinner', name: 'Cena', desc: 'Salmón a la parrilla, brócoli', time: '8:00 PM', calories: 520, icon: 'dinner' }
     ]
 };
 
 // ========== SCREEN NAVIGATION ==========
 function switchScreen(screenName) {
-    // Hide all screens
     document.querySelectorAll('.screen').forEach(screen => {
         screen.classList.remove('active');
     });
 
-    // Show selected screen
     document.getElementById('screen-' + screenName).classList.add('active');
 
-    // Update nav items
     document.querySelectorAll('.nav-item').forEach(item => {
         item.classList.remove('active');
     });
     document.querySelector('.nav-item[data-screen="' + screenName + '"]').classList.add('active');
 
-    // Scroll to top
     document.querySelector('.screens-container').scrollTop = 0;
 }
 
@@ -40,7 +36,7 @@ function switchScreen(screenName) {
 function addWater() {
     AppState.water = Math.min(AppState.water + 0.25, AppState.waterGoal);
     updateWaterDisplay();
-    showToast('💧 +250ml de agua añadidos');
+    showToast('+250ml de agua añadidos');
 }
 
 function updateWaterDisplay() {
@@ -62,7 +58,6 @@ function openAddMealModal() {
 
 function closeAddMealModal() {
     document.getElementById('addMealModal').classList.remove('active');
-    // Clear form
     document.getElementById('mealDesc').value = '';
     document.getElementById('mealCalories').value = '';
 }
@@ -73,7 +68,7 @@ function saveMeal() {
     const calories = parseInt(document.getElementById('mealCalories').value);
 
     if (!desc || !calories) {
-        showToast('⚠️ Completa todos los campos');
+        showToast('Completa todos los campos');
         return;
     }
 
@@ -85,10 +80,10 @@ function saveMeal() {
     };
 
     const mealIcons = {
-        breakfast: '🌅',
-        lunch: '☀️',
-        snack: '🥜',
-        dinner: '🌙'
+        breakfast: 'sun',
+        lunch: 'lunch',
+        snack: 'snack',
+        dinner: 'dinner'
     };
 
     const now = new Date();
@@ -109,7 +104,7 @@ function saveMeal() {
     renderMeals();
     updateCaloriesDisplay();
     closeAddMealModal();
-    showToast('✅ Comida registrada');
+    showToast('Comida registrada correctamente');
 }
 
 function renderMeals() {
@@ -119,8 +114,11 @@ function renderMeals() {
     AppState.meals.forEach(meal => {
         const mealCard = document.createElement('div');
         mealCard.className = 'meal-card';
+        mealCard.setAttribute('data-meal', meal.type);
         mealCard.innerHTML = `
-            <div class="meal-icon">${meal.icon}</div>
+            <div class="meal-icon">
+                <svg viewBox="0 0 24 24"><use href="icons/svg/${meal.icon}.svg"/></svg>
+            </div>
             <div class="meal-info">
                 <h3>${meal.name}</h3>
                 <p>${meal.desc}</p>
@@ -146,11 +144,10 @@ function updateCaloriesDisplay() {
 
 // ========== EXERCISE ==========
 function startWorkout() {
-    showToast('🏋️ Iniciando entrenamiento...');
+    showToast('Iniciando entrenamiento...');
 
-    // Simulate workout timer
     setTimeout(() => {
-        showToast('✅ Entrenamiento completado: +45 min');
+        showToast('Entrenamiento completado: +45 min');
         AppState.steps += 1200;
         document.getElementById('stepsValue').textContent = AppState.steps.toLocaleString();
     }, 2000);
@@ -163,7 +160,7 @@ function showCategory(category) {
         flex: 'Flexibilidad',
         balance: 'Equilibrio'
     };
-    showToast(`📂 Abriendo rutinas de ${categoryNames[category]}...`);
+    showToast('Abriendo rutinas de ' + categoryNames[category] + '...');
 }
 
 // ========== SETTINGS ==========
@@ -173,7 +170,7 @@ function toggleSetting(element) {
         toggle.classList.toggle('active');
         const isActive = toggle.classList.contains('active');
         const label = element.querySelector('.setting-label').textContent;
-        showToast(`${isActive ? '✅' : '❌'} ${label} ${isActive ? 'activado' : 'desactivado'}`);
+        showToast(label + ' ' + (isActive ? 'activado' : 'desactivado'));
     }
 }
 
@@ -201,13 +198,11 @@ document.addEventListener('DOMContentLoaded', function() {
     updateTime();
     setInterval(updateTime, 60000);
 
-    // Handle pull-to-refresh prevention
     document.body.addEventListener('touchmove', function(e) {
         if (e.target.closest('.screens-container')) return;
         e.preventDefault();
     }, { passive: false });
 
-    // Prevent zoom on double tap
     let lastTouchEnd = 0;
     document.addEventListener('touchend', function(e) {
         const now = Date.now();
@@ -217,7 +212,6 @@ document.addEventListener('DOMContentLoaded', function() {
         lastTouchEnd = now;
     }, { passive: false });
 
-    // Register service worker for PWA
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('sw.js').catch(() => {
             console.log('Service Worker registration failed');

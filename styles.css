@@ -1122,3 +1122,179 @@ body {
         transition-duration: 0.01ms !important;
     }
 }
+
+/* ========== SVG ICONS STYLES ========== */
+
+/* Status bar icons */
+.status-icon {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+}
+
+/* Button icons */
+.btn-icon {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    fill: none;
+    flex-shrink: 0;
+}
+
+/* Navigation icons */
+.nav-icon-svg {
+    width: 24px;
+    height: 24px;
+    stroke: currentColor;
+    fill: none;
+    transition: stroke 0.2s;
+}
+
+.nav-item.active .nav-icon-svg {
+    stroke: var(--accent-purple);
+    filter: drop-shadow(0 0 6px rgba(123, 97, 255, 0.4));
+}
+
+/* Meal icons */
+.meal-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.meal-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: currentColor;
+    fill: none;
+}
+
+.meal-card[data-meal="breakfast"] .meal-icon {
+    color: #FF8E53;
+    background: rgba(255, 142, 83, 0.15);
+}
+
+.meal-card[data-meal="lunch"] .meal-icon {
+    color: #4ECDC4;
+    background: rgba(78, 205, 196, 0.15);
+}
+
+.meal-card[data-meal="snack"] .meal-icon {
+    color: #7B61FF;
+    background: rgba(123, 97, 255, 0.15);
+}
+
+.meal-card[data-meal="dinner"] .meal-icon {
+    color: #00D4AA;
+    background: rgba(0, 212, 170, 0.15);
+}
+
+/* Category icons */
+.category-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px;
+}
+
+.category-icon svg {
+    width: 26px;
+    height: 26px;
+    stroke: currentColor;
+    fill: none;
+}
+
+.category-cardio .category-icon {
+    background: rgba(255, 107, 107, 0.2);
+    color: #FF6B6B;
+}
+
+.category-strength .category-icon {
+    background: rgba(123, 97, 255, 0.2);
+    color: #7B61FF;
+}
+
+.category-flex .category-icon {
+    background: rgba(78, 205, 196, 0.2);
+    color: #4ECDC4;
+}
+
+.category-balance .category-icon {
+    background: rgba(255, 217, 61, 0.2);
+    color: #FFD93D;
+}
+
+/* Suggestion icon */
+.suggestion-icon {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    fill: none;
+    flex-shrink: 0;
+    color: var(--accent-orange);
+}
+
+/* Recommendation icon */
+.rec-icon {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    fill: none;
+    flex-shrink: 0;
+    color: var(--accent-teal);
+}
+
+/* Setting icons */
+.setting-icon-svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    fill: none;
+    margin-right: 12px;
+    flex-shrink: 0;
+    color: var(--text-secondary);
+}
+
+.setting-arrow-svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    fill: none;
+    color: var(--text-tertiary);
+    flex-shrink: 0;
+}
+
+/* Play button icon */
+.start-workout-btn .btn-icon {
+    fill: currentColor;
+    stroke: none;
+}
+
+/* Add water button */
+.add-water-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Add meal button */
+.add-meal-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.add-meal-btn .btn-icon {
+    width: 20px;
+    height: 20px;
+}
