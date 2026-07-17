@@ -1,501 +1,445 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="theme-color" content="#0F0F23">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="description" content="Wellness Glassmorphic - Control de salud, alimentación y ejercicio">
-
-    <title>Wellness Glass</title>
-
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="icons/icon-192.png">
-    <link rel="icon" type="image/png" href="icons/icon-192.png">
-
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0F0F23">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="description" content="Wellness Glass - App de salud con IA integrada">
+<title>Wellness Glass + AI</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect fill='%237B61FF' width='192' height='192' rx='48'/%3E%3Ctext x='96' y='120' font-size='80' text-anchor='middle' fill='white'%3E%F0%9F%8C%BF%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="app">
-        <!-- Status Bar -->
-        <div class="status-bar">
-            <span class="status-time" id="statusTime">9:41</span>
-            <div class="status-icons">
-                <svg class="status-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/><path d="M22 4v16"/></svg>
-                <svg class="status-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
-                <svg class="status-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="16" height="10" rx="2" ry="2"/><line x1="22" y1="11" x2="22" y2="13"/><line x1="6" y1="11" x2="6" y2="13"/><line x1="10" y1="11" x2="10" y2="13"/><line x1="14" y1="11" x2="14" y2="13"/></svg>
-            </div>
+<div id="app">
+  <div class="status-bar">
+    <span class="status-time" id="statusTime">9:41</span>
+    <div class="status-icons"><span>📶</span><span>📡</span><span>🔋</span></div>
+  </div>
+
+  <main class="screens-container">
+
+    <!-- SCREEN: ONBOARDING -->
+    <section id="screen-onboarding" class="screen" style="display:none">
+      <div class="screen-header" style="text-align:center;padding-top:40px">
+        <h1 class="screen-title" style="font-size:32px">🎯 Bienvenido</h1>
+        <p class="screen-subtitle" style="font-size:15px;margin-top:8px">Configura tu perfil para recibir recomendaciones personalizadas</p>
+      </div>
+      <div class="glass-card" style="padding:24px">
+        <div class="form-group">
+          <label>👤 Nombre</label>
+          <input type="text" id="onbName" placeholder="Tu nombre" value="Alex">
         </div>
-
-        <!-- Screens Container -->
-        <main class="screens-container">
-
-            <!-- ========== SCREEN: HOME ========== -->
-            <section id="screen-home" class="screen active">
-                <div class="screen-header">
-                    <p class="screen-subtitle">Viernes, 17 de Julio</p>
-                    <h1 class="screen-title">Buenos días, Alex</h1>
-                </div>
-
-                <!-- Dashboard Card -->
-                <div class="glass-card dashboard-card">
-                    <h2 class="card-title">Resumen Diario</h2>
-
-                    <div class="dashboard-stats">
-                        <div class="stat-item">
-                            <span class="stat-label">CALORÍAS</span>
-                            <span class="stat-value" id="calValue">1,240</span>
-                            <span class="stat-goal">/ 2,000 kcal</span>
-                            <div class="progress-bar">
-                                <div class="progress-fill progress-cal" style="width: 62%"></div>
-                            </div>
-                        </div>
-
-                        <div class="stat-item">
-                            <span class="stat-label">AGUA</span>
-                            <span class="stat-value" id="waterValue">1.5L</span>
-                            <span class="stat-goal">/ 2.5L</span>
-                            <div class="progress-bar">
-                                <div class="progress-fill progress-water" style="width: 60%"></div>
-                            </div>
-                            <button class="add-water-btn" onclick="addWater()">
-                                <svg class="btn-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                                Añadir 250ml
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Activity Card -->
-                <div class="glass-card activity-card">
-                    <h2 class="card-title">Actividad</h2>
-                    <div class="activity-content">
-                        <div class="activity-stats">
-                            <div>
-                                <span class="stat-label">PASOS</span>
-                                <span class="stat-value" id="stepsValue">8,432</span>
-                            </div>
-                            <div>
-                                <span class="stat-label">EJERCICIO</span>
-                                <span class="stat-value">45 min</span>
-                            </div>
-                        </div>
-                        <div class="activity-rings">
-                            <svg viewBox="0 0 120 120" class="rings-svg">
-                                <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="10"/>
-                                <circle cx="60" cy="60" r="50" fill="none" stroke="url(#gradCal)" stroke-width="10" 
-                                    stroke-dasharray="314" stroke-dashoffset="100" stroke-linecap="round" 
-                                    transform="rotate(-90 60 60)"/>
-                                <circle cx="60" cy="60" r="36" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="10"/>
-                                <circle cx="60" cy="60" r="36" fill="none" stroke="url(#gradSteps)" stroke-width="10" 
-                                    stroke-dasharray="226" stroke-dashoffset="60" stroke-linecap="round" 
-                                    transform="rotate(-90 60 60)"/>
-                                <circle cx="60" cy="60" r="22" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="10"/>
-                                <circle cx="60" cy="60" r="22" fill="none" stroke="#00D4AA" stroke-width="10" 
-                                    stroke-dasharray="138" stroke-dashoffset="35" stroke-linecap="round" 
-                                    transform="rotate(-90 60 60)"/>
-                                <defs>
-                                    <linearGradient id="gradCal" x1="0%" y1="0%" x2="100%" y2="0%">
-                                        <stop offset="0%" stop-color="#FF6B6B"/>
-                                        <stop offset="100%" stop-color="#FF8E53"/>
-                                    </linearGradient>
-                                    <linearGradient id="gradSteps" x1="0%" y1="0%" x2="100%" y2="0%">
-                                        <stop offset="0%" stop-color="#7B61FF"/>
-                                        <stop offset="100%" stop-color="#A855F7"/>
-                                    </linearGradient>
-                                </defs>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Nutrition Card -->
-                <div class="glass-card nutrition-card">
-                    <h2 class="card-title">Nutrición Hoy</h2>
-                    <div class="macro-grid">
-                        <div class="macro-item">
-                            <span class="macro-label">Proteínas</span>
-                            <span class="macro-value" id="proteinValue">85g</span>
-                            <div class="macro-bar"><div class="macro-fill macro-protein" style="width: 72%"></div></div>
-                        </div>
-                        <div class="macro-item">
-                            <span class="macro-label">Carbos</span>
-                            <span class="macro-value" id="carbsValue">142g</span>
-                            <div class="macro-bar"><div class="macro-fill macro-carbs" style="width: 78%"></div></div>
-                        </div>
-                        <div class="macro-item">
-                            <span class="macro-label">Grasas</span>
-                            <span class="macro-value" id="fatsValue">48g</span>
-                            <div class="macro-bar"><div class="macro-fill macro-fats" style="width: 56%"></div></div>
-                        </div>
-                    </div>
-                    <div class="meal-suggestion">
-                        <svg class="suggestion-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>
-                        <span>Próxima comida: Pollo al limón + quinoa</span>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ========== SCREEN: MEALS ========== -->
-            <section id="screen-meals" class="screen">
-                <div class="screen-header">
-                    <p class="screen-subtitle">Control Alimenticio</p>
-                    <h1 class="screen-title">Mis Comidas</h1>
-                </div>
-
-                <button class="add-meal-btn" onclick="openAddMealModal()">
-                    <svg class="btn-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                    Registrar Nueva Comida
-                </button>
-
-                <div class="meals-list" id="mealsList">
-                    <div class="meal-card" data-meal="breakfast">
-                        <div class="meal-icon">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
-                        </div>
-                        <div class="meal-info">
-                            <h3>Desayuno</h3>
-                            <p>Avena con frutas, café negro</p>
-                            <span class="meal-time">7:30 AM • 420 kcal</span>
-                        </div>
-                        <div class="meal-calories">420<span>kcal</span></div>
-                    </div>
-
-                    <div class="meal-card" data-meal="lunch">
-                        <div class="meal-icon">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v8"/><path d="m4.93 10.93 1.41 1.41"/><path d="M2 18h2"/><path d="M20 18h2"/><path d="m19.07 10.93-1.41 1.41"/><path d="M22 22H2"/><path d="m8 6 4-4 4 4"/><path d="M16 18a4 4 0 0 0-8 0"/></svg>
-                        </div>
-                        <div class="meal-info">
-                            <h3>Almuerzo</h3>
-                            <p>Ensalada César con pollo</p>
-                            <span class="meal-time">1:00 PM • 580 kcal</span>
-                        </div>
-                        <div class="meal-calories">580<span>kcal</span></div>
-                    </div>
-
-                    <div class="meal-card" data-meal="snack">
-                        <div class="meal-icon">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="9" cy="9" r="1.5" fill="currentColor" stroke="none"/><circle cx="15" cy="9" r="1.5" fill="currentColor" stroke="none"/><circle cx="9" cy="15" r="1.5" fill="currentColor" stroke="none"/><circle cx="15" cy="15" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg>
-                        </div>
-                        <div class="meal-info">
-                            <h3>Snack</h3>
-                            <p>Yogur griego con nueces</p>
-                            <span class="meal-time">4:30 PM • 180 kcal</span>
-                        </div>
-                        <div class="meal-calories">180<span>kcal</span></div>
-                    </div>
-
-                    <div class="meal-card" data-meal="dinner">
-                        <div class="meal-icon">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/><path d="M19 3v4"/><path d="M21 5h-4"/></svg>
-                        </div>
-                        <div class="meal-info">
-                            <h3>Cena</h3>
-                            <p>Salmón a la parrilla, brócoli</p>
-                            <span class="meal-time">8:00 PM • 520 kcal</span>
-                        </div>
-                        <div class="meal-calories">520<span>kcal</span></div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ========== SCREEN: EXERCISE ========== -->
-            <section id="screen-exercise" class="screen">
-                <div class="screen-header">
-                    <p class="screen-subtitle">Rutina de Hoy</p>
-                    <h1 class="screen-title">Ejercicio</h1>
-                </div>
-
-                <div class="glass-card workout-card">
-                    <h2 class="card-title">Entrenamiento de Hoy</h2>
-                    <p class="workout-subtitle">Fuerza Superior • 45 min</p>
-                    <div class="exercise-list">
-                        <div class="exercise-item">
-                            <span>1. Press de banca</span>
-                            <span class="exercise-sets">4x12</span>
-                        </div>
-                        <div class="exercise-item">
-                            <span>2. Dominadas</span>
-                            <span class="exercise-sets">3x10</span>
-                        </div>
-                        <div class="exercise-item">
-                            <span>3. Fondos en paralelas</span>
-                            <span class="exercise-sets">3x12</span>
-                        </div>
-                    </div>
-                    <button class="start-workout-btn" onclick="startWorkout()">
-                        <svg class="btn-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                        Iniciar Entrenamiento
-                    </button>
-                </div>
-
-                <h2 class="section-title">Categorías</h2>
-                <div class="categories-grid">
-                    <div class="category-card category-cardio" onclick="showCategory('cardio')">
-                        <div class="category-icon">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
-                        </div>
-                        <h3>Cardio</h3>
-                        <span>12 rutinas</span>
-                    </div>
-                    <div class="category-card category-strength" onclick="showCategory('strength')">
-                        <div class="category-icon">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6.5 6.5 11 11"/><path d="m21 21-1-1"/><path d="m3 3 1 1"/><path d="m18 22 4-4"/><path d="m2 6 4-4"/><path d="m3 10 7-7"/><path d="m14 21 7-7"/></svg>
-                        </div>
-                        <h3>Fuerza</h3>
-                        <span>18 rutinas</span>
-                    </div>
-                    <div class="category-card category-flex" onclick="showCategory('flex')">
-                        <div class="category-icon">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 8v8"/><path d="M8 12h8"/><path d="m8 8 8 8"/><path d="m16 8-8 8"/></svg>
-                        </div>
-                        <h3>Flexibilidad</h3>
-                        <span>8 rutinas</span>
-                    </div>
-                    <div class="category-card category-balance" onclick="showCategory('balance')">
-                        <div class="category-icon">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="2" x2="12" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><circle cx="12" cy="12" r="4"/></svg>
-                        </div>
-                        <h3>Equilibrio</h3>
-                        <span>6 rutinas</span>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ========== SCREEN: HEALTH ========== -->
-            <section id="screen-health" class="screen">
-                <div class="screen-header">
-                    <p class="screen-subtitle">Bienestar General</p>
-                    <h1 class="screen-title">Salud</h1>
-                </div>
-
-                <!-- Sleep Card -->
-                <div class="glass-card health-card">
-                    <h2 class="card-title">Sueño</h2>
-                    <div class="sleep-graph">
-                        <svg viewBox="0 0 300 60" class="sleep-svg">
-                            <defs>
-                                <linearGradient id="sleepGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                                    <stop offset="0%" stop-color="#7B61FF" stop-opacity="0.3"/>
-                                    <stop offset="100%" stop-color="#7B61FF" stop-opacity="0"/>
-                                </linearGradient>
-                            </defs>
-                            <path d="M0,50 Q30,20 60,35 T120,15 T180,25 T240,10 T300,20 L300,60 L0,60 Z" fill="url(#sleepGrad)"/>
-                            <path d="M0,50 Q30,20 60,35 T120,15 T180,25 T240,10 T300,20" fill="none" stroke="#7B61FF" stroke-width="2"/>
-                        </svg>
-                    </div>
-                    <div class="health-stats-row">
-                        <span>Anoche: 7h 42m • Calidad: 85%</span>
-                        <span class="health-big-value">7h 42m</span>
-                    </div>
-                </div>
-
-                <!-- Health Stats Grid -->
-                <div class="health-grid">
-                    <div class="glass-card health-small-card">
-                        <h3>Ritmo Cardíaco</h3>
-                        <div class="health-value health-heart">72<span>bpm</span></div>
-                        <div class="mini-graph heart-graph">
-                            <svg viewBox="0 0 100 30">
-                                <path d="M0,15 L10,15 L15,5 L20,25 L25,10 L30,15 L40,15 L45,8 L50,20 L55,12 L60,15 L70,15 L75,6 L80,18 L85,10 L90,15 L100,15" 
-                                    fill="none" stroke="#FF6B6B" stroke-width="1.5"/>
-                            </svg>
-                        </div>
-                        <span class="health-detail">Promedio: 68 bpm</span>
-                    </div>
-
-                    <div class="glass-card health-small-card">
-                        <h3>Peso</h3>
-                        <div class="health-value health-weight">74.2<span>kg</span></div>
-                        <div class="mini-graph weight-graph">
-                            <svg viewBox="0 0 100 30">
-                                <path d="M0,20 L15,18 L30,19 L45,14 L60,15 L75,10 L90,12 L100,10" 
-                                    fill="none" stroke="#4ECDC4" stroke-width="1.5"/>
-                            </svg>
-                        </div>
-                        <span class="health-detail">-0.8 kg esta semana</span>
-                    </div>
-                </div>
-
-                <!-- Stress Card -->
-                <div class="glass-card stress-card">
-                    <h2 class="card-title">Nivel de Estrés</h2>
-                    <div class="stress-gauge">
-                        <div class="stress-bar-bg">
-                            <div class="stress-bar-fill" style="width: 40%"></div>
-                        </div>
-                    </div>
-                    <div class="stress-info">
-                        <span>Moderado • 40%</span>
-                        <span class="stress-status">Bien</span>
-                    </div>
-                    <div class="stress-recommendation">
-                        <svg class="rec-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M12 12v4"/><path d="M8 12h8"/></svg>
-                        <span>Recomendado: Meditación 10 min</span>
-                    </div>
-                </div>
-
-                <!-- BMI Card -->
-                <div class="glass-card bmi-card">
-                    <h2 class="card-title">IMC</h2>
-                    <div class="bmi-value">
-                        <span class="bmi-number">22.4</span>
-                        <span class="bmi-status">Normal</span>
-                    </div>
-                    <div class="bmi-scale">
-                        <div class="bmi-segment bmi-under"></div>
-                        <div class="bmi-segment bmi-normal"></div>
-                        <div class="bmi-segment bmi-over"></div>
-                        <div class="bmi-marker" style="left: 40%"></div>
-                    </div>
-                    <div class="bmi-labels">
-                        <span>Bajo</span>
-                        <span>Normal</span>
-                        <span>Sobrepeso</span>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ========== SCREEN: PROFILE ========== -->
-            <section id="screen-profile" class="screen">
-                <div class="profile-header">
-                    <div class="profile-avatar">
-                        <div class="avatar-ring"></div>
-                        <span>A</span>
-                    </div>
-                    <h1 class="profile-name">Alex Martínez</h1>
-                    <p class="profile-since">Miembro desde Enero 2026</p>
-                </div>
-
-                <div class="profile-stats-row">
-                    <div class="glass-card profile-stat-card">
-                        <span class="profile-stat-value">28</span>
-                        <span class="profile-stat-label">Años</span>
-                    </div>
-                    <div class="glass-card profile-stat-card">
-                        <span class="profile-stat-value">182</span>
-                        <span class="profile-stat-label">cm</span>
-                    </div>
-                    <div class="glass-card profile-stat-card">
-                        <span class="profile-stat-value">74.2</span>
-                        <span class="profile-stat-label">kg</span>
-                    </div>
-                </div>
-
-                <h2 class="section-title">Mis Objetivos</h2>
-
-                <div class="glass-card goal-card">
-                    <div class="goal-info">
-                        <h3>Peso Objetivo</h3>
-                        <p>Meta: 70 kg</p>
-                    </div>
-                    <span class="goal-value goal-weight">-4.2 kg</span>
-                </div>
-
-                <div class="glass-card goal-card">
-                    <div class="goal-info">
-                        <h3>Calorías Diarias</h3>
-                        <p>Meta: 2,000 kcal</p>
-                    </div>
-                    <span class="goal-value goal-cal">2,000 kcal</span>
-                </div>
-
-                <div class="glass-card goal-card">
-                    <div class="goal-info">
-                        <h3>Pasos Diarios</h3>
-                        <p>Meta: 10,000 pasos</p>
-                    </div>
-                    <span class="goal-value goal-steps">10,000</span>
-                </div>
-
-                <h2 class="section-title">Configuración</h2>
-
-                <div class="glass-card setting-card" onclick="toggleSetting(this)">
-                    <svg class="setting-icon-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
-                    <span class="setting-label">Notificaciones</span>
-                    <div class="toggle-switch active">
-                        <div class="toggle-knob"></div>
-                    </div>
-                </div>
-
-                <div class="glass-card setting-card" onclick="toggleSetting(this)">
-                    <svg class="setting-icon-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="m8.5 6.5 2-2"/><path d="m17.5 15.5 2-2"/></svg>
-                    <span class="setting-label">Unidades de Medida</span>
-                    <svg class="setting-arrow-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                </div>
-
-                <div class="glass-card setting-card" onclick="toggleSetting(this)">
-                    <svg class="setting-icon-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
-                    <span class="setting-label">Modo Oscuro</span>
-                    <div class="toggle-switch active">
-                        <div class="toggle-knob"></div>
-                    </div>
-                </div>
-            </section>
-
-        </main>
-
-        <!-- Bottom Navigation -->
-        <nav class="bottom-nav">
-            <button class="nav-item active" data-screen="home" onclick="switchScreen('home')">
-                <svg class="nav-icon-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                <span class="nav-label">Inicio</span>
-            </button>
-            <button class="nav-item" data-screen="meals" onclick="switchScreen('meals')">
-                <svg class="nav-icon-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>
-                <span class="nav-label">Comidas</span>
-            </button>
-            <button class="nav-item" data-screen="exercise" onclick="switchScreen('exercise')">
-                <svg class="nav-icon-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6.5 6.5 11 11"/><path d="m21 21-1-1"/><path d="m3 3 1 1"/><path d="m18 22 4-4"/><path d="m2 6 4-4"/><path d="m3 10 7-7"/><path d="m14 21 7-7"/></svg>
-                <span class="nav-label">Ejercicio</span>
-            </button>
-            <button class="nav-item" data-screen="health" onclick="switchScreen('health')">
-                <svg class="nav-icon-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/></svg>
-                <span class="nav-label">Salud</span>
-            </button>
-            <button class="nav-item" data-screen="profile" onclick="switchScreen('profile')">
-                <svg class="nav-icon-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                <span class="nav-label">Perfil</span>
-            </button>
-        </nav>
-
-        <!-- Home Indicator -->
-        <div class="home-indicator"></div>
-
-        <!-- Add Meal Modal -->
-        <div id="addMealModal" class="modal">
-            <div class="modal-overlay" onclick="closeAddMealModal()"></div>
-            <div class="modal-content glass-card">
-                <h2>Registrar Comida</h2>
-                <div class="form-group">
-                    <label>Tipo de comida</label>
-                    <select id="mealType">
-                        <option value="breakfast">Desayuno</option>
-                        <option value="lunch">Almuerzo</option>
-                        <option value="snack">Snack</option>
-                        <option value="dinner">Cena</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Descripción</label>
-                    <input type="text" id="mealDesc" placeholder="Ej: Ensalada de pollo">
-                </div>
-                <div class="form-group">
-                    <label>Calorías</label>
-                    <input type="number" id="mealCalories" placeholder="Ej: 450">
-                </div>
-                <div class="modal-buttons">
-                    <button class="btn-cancel" onclick="closeAddMealModal()">Cancelar</button>
-                    <button class="btn-save" onclick="saveMeal()">Guardar</button>
-                </div>
-            </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div class="form-group">
+            <label>📅 Edad</label>
+            <input type="number" id="onbAge" placeholder="28" value="28">
+          </div>
+          <div class="form-group">
+            <label>⚧ Género</label>
+            <select id="onbGender"><option value="male">Hombre</option><option value="female">Mujer</option></select>
+          </div>
         </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div class="form-group">
+            <label>📏 Altura (cm)</label>
+            <input type="number" id="onbHeight" placeholder="175" value="182">
+          </div>
+          <div class="form-group">
+            <label>⚖️ Peso actual (kg)</label>
+            <input type="number" id="onbWeight" placeholder="70" value="74.2" step="0.1">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>🎯 Peso objetivo (kg)</label>
+          <input type="number" id="onbGoalWeight" placeholder="65" value="70" step="0.1">
+        </div>
+        <div class="form-group">
+          <label>🎯 Objetivo principal</label>
+          <select id="onbGoal">
+            <option value="lose_weight">Perder peso</option>
+            <option value="maintain">Mantener peso</option>
+            <option value="gain_muscle">Ganar músculo</option>
+            <option value="performance">Rendimiento deportivo</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>💪 Nivel de actividad física</label>
+          <select id="onbActivity">
+            <option value="sedentary">Sedentario (poco o nada de ejercicio)</option>
+            <option value="light">Ligero (1-3 días/semana)</option>
+            <option value="moderate" selected>Moderado (3-5 días/semana)</option>
+            <option value="active">Activo (6-7 días/semana)</option>
+            <option value="very_active">Muy activo (trabajo físico + ejercicio)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>🍽️ Tipo de dieta preferida</label>
+          <select id="onbDiet">
+            <option value="balanced">Equilibrada</option>
+            <option value="vegetarian">Vegetariana</option>
+            <option value="vegan">Vegana</option>
+            <option value="keto">Cetogénica (Keto)</option>
+            <option value="paleo">Paleo</option>
+            <option value="mediterranean">Mediterránea</option>
+            <option value="low_carb">Baja en carbohidratos</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>🚫 Restricciones alimentarias / Alergias</label>
+          <input type="text" id="onbRestrictions" placeholder="Ej: Sin gluten, alergia a frutos secos, lactosa...">
+        </div>
+        <div class="form-group">
+          <label>🏋️ Enfoque de entrenamiento</label>
+          <select id="onbTrainingFocus">
+            <option value="full_body">Cuerpo completo</option>
+            <option value="upper_body">Tren superior</option>
+            <option value="lower_body">Tren inferior</option>
+            <option value="core">Core y abdomen</option>
+            <option value="cardio">Cardio y resistencia</option>
+            <option value="strength">Fuerza pura</option>
+            <option value="hypertrophy">Hipertrofia muscular</option>
+            <option value="flexibility">Flexibilidad y movilidad</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>📆 Días disponibles para entrenar / semana</label>
+          <select id="onbTrainingDays">
+            <option value="1">1 día</option>
+            <option value="2">2 días</option>
+            <option value="3">3 días</option>
+            <option value="4" selected>4 días</option>
+            <option value="5">5 días</option>
+            <option value="6">6 días</option>
+            <option value="7">7 días</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>🍜 Preferencias culinarias</label>
+          <input type="text" id="onbCuisine" placeholder="Ej: Mexicana, Italiana, Asiática, simple y rápida...">
+        </div>
+        <button class="btn-save" style="width:100%;margin-top:8px;font-size:16px;padding:16px" onclick="saveOnboarding()">
+          ✅ Crear mi perfil personalizado
+        </button>
+      </div>
+    </section>
 
-        <!-- Toast Notification -->
-        <div id="toast" class="toast"></div>
+    <!-- SCREEN: HOME -->
+    <section id="screen-home" class="screen active">
+      <div class="screen-header">
+        <p class="screen-subtitle" id="homeDate">Viernes, 17 de Julio</p>
+        <h1 class="screen-title" id="homeGreeting">Buenos días</h1>
+      </div>
+      <div class="glass-card dashboard-card">
+        <h2 class="card-title">Resumen Diario</h2>
+        <div class="dashboard-stats">
+          <div class="stat-item">
+            <span class="stat-label">CALORÍAS</span>
+            <span class="stat-value" id="calValue">1,240</span>
+            <span class="stat-goal">/ <span id="calGoalDisplay">2,000</span> kcal</span>
+            <div class="progress-bar"><div class="progress-fill progress-cal" id="calProgress" style="width:62%"></div></div>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">AGUA</span>
+            <span class="stat-value" id="waterValue">1.5L</span>
+            <span class="stat-goal">/ <span id="waterGoalDisplay">2.5</span>L</span>
+            <div class="progress-bar"><div class="progress-fill progress-water" id="waterProgress" style="width:60%"></div></div>
+            <button class="add-water-btn" onclick="addWater()">+ Añadir 250ml</button>
+          </div>
+        </div>
+      </div>
+      <div class="glass-card activity-card">
+        <h2 class="card-title">Actividad</h2>
+        <div class="activity-content">
+          <div class="activity-stats">
+            <div><span class="stat-label">PASOS</span><span class="stat-value" id="stepsValue">8,432</span></div>
+            <div><span class="stat-label">EJERCICIO</span><span class="stat-value" id="exerciseValue">45 min</span></div>
+          </div>
+          <div class="activity-rings">
+            <svg viewBox="0 0 120 120" class="rings-svg">
+              <defs>
+                <linearGradient id="gradCal" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#FF6B6B"/><stop offset="100%" stop-color="#FF8E53"/></linearGradient>
+                <linearGradient id="gradSteps" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#7B61FF"/><stop offset="100%" stop-color="#A855F7"/></linearGradient>
+              </defs>
+              <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="10"/>
+              <circle cx="60" cy="60" r="50" fill="none" stroke="url(#gradCal)" stroke-width="10" stroke-dasharray="314" stroke-dashoffset="100" stroke-linecap="round" transform="rotate(-90 60 60)"/>
+              <circle cx="60" cy="60" r="36" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="10"/>
+              <circle cx="60" cy="60" r="36" fill="none" stroke="url(#gradSteps)" stroke-width="10" stroke-dasharray="226" stroke-dashoffset="60" stroke-linecap="round" transform="rotate(-90 60 60)"/>
+              <circle cx="60" cy="60" r="22" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="10"/>
+              <circle cx="60" cy="60" r="22" fill="none" stroke="#00D4AA" stroke-width="10" stroke-dasharray="138" stroke-dashoffset="35" stroke-linecap="round" transform="rotate(-90 60 60)"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="glass-card nutrition-card">
+        <h2 class="card-title">Nutrición Hoy</h2>
+        <div class="macro-grid">
+          <div class="macro-item"><span class="macro-label">Proteínas</span><span class="macro-value" id="proteinValue">85g</span><div class="macro-bar"><div class="macro-fill macro-protein" id="proteinBar" style="width:72%"></div></div></div>
+          <div class="macro-item"><span class="macro-label">Carbos</span><span class="macro-value" id="carbsValue">142g</span><div class="macro-bar"><div class="macro-fill macro-carbs" id="carbsBar" style="width:78%"></div></div></div>
+          <div class="macro-item"><span class="macro-label">Grasas</span><span class="macro-value" id="fatsValue">48g</span><div class="macro-bar"><div class="macro-fill macro-fats" id="fatsBar" style="width:56%"></div></div></div>
+        </div>
+        <div class="meal-suggestion" id="nextMealSuggestion"><span>🍽️</span><span>Próxima comida: Pollo al limón + quinoa</span></div>
+      </div>
+      <h2 class="section-title">Asistente IA</h2>
+      <div class="ai-feature-grid">
+        <div class="ai-feature-card" onclick="openAIChat()"><div class="ai-feature-icon" style="background:rgba(123,97,255,0.2)">🤖</div><h3>Chat IA</h3><p>Pregunta sobre salud</p></div>
+        <div class="ai-feature-card" onclick="openAIMealAnalyzer()"><div class="ai-feature-icon" style="background:rgba(255,107,107,0.2)">📸</div><h3>Analizar Comida</h3><p>Describe tu plato</p></div>
+        <div class="ai-feature-card" onclick="openAIWorkout()"><div class="ai-feature-icon" style="background:rgba(0,212,170,0.2)">🏋️</div><h3>Rutina IA</h3><p>Genera ejercicios</p></div>
+        <div class="ai-feature-card" onclick="openAIRecipes()"><div class="ai-feature-icon" style="background:rgba(255,217,61,0.2)">🥗</div><h3>Recetas IA</h3><p>Recetas saludables</p></div>
+      </div>
+    </section>
+
+    <!-- SCREEN: MEALS -->
+    <section id="screen-meals" class="screen">
+      <div class="screen-header"><p class="screen-subtitle">Control Alimenticio</p><h1 class="screen-title">Mis Comidas</h1></div>
+      <button class="add-meal-btn" onclick="openAddMealModal()"><span>+</span> Registrar Nueva Comida</button>
+      <div class="meals-list" id="mealsList"></div>
+      <h2 class="section-title">Analizar con IA</h2>
+      <div class="glass-card" style="cursor:pointer" onclick="openAIMealAnalyzer()">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:44px;height:44px;border-radius:50%;background:rgba(123,97,255,0.2);display:flex;align-items:center;justify-content:center;font-size:20px">🤖</div>
+          <div><h3 style="font-size:15px;font-weight:600">Analizar comida con IA</h3><p style="font-size:12px;color:var(--text-secondary)">Describe lo que comiste y la IA calculará calorías y macros</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN: EXERCISE -->
+    <section id="screen-exercise" class="screen">
+      <div class="screen-header"><p class="screen-subtitle">Rutina de Hoy</p><h1 class="screen-title">Ejercicio</h1></div>
+      <div class="glass-card workout-card">
+        <h2 class="card-title">Entrenamiento de Hoy</h2>
+        <p class="workout-subtitle" id="workoutSubtitle">Fuerza Superior • 45 min</p>
+        <div class="exercise-list" id="exerciseList">
+          <div class="exercise-item"><span>1. Press de banca</span><span class="exercise-sets">4x12</span></div>
+          <div class="exercise-item"><span>2. Dominadas</span><span class="exercise-sets">3x10</span></div>
+          <div class="exercise-item"><span>3. Fondos en paralelas</span><span class="exercise-sets">3x12</span></div>
+        </div>
+        <button class="start-workout-btn" onclick="startWorkout()">▶ Iniciar Entrenamiento</button>
+      </div>
+      <div class="glass-card" id="workoutTimerCard" style="display:none">
+        <div class="workout-timer">
+          <div class="timer-display" id="timerDisplay">00:00:00</div>
+          <div class="timer-controls">
+            <button class="timer-btn start" id="timerStartBtn" onclick="toggleTimer()">▶ Iniciar</button>
+            <button class="timer-btn stop" onclick="stopTimer()">⏹ Finalizar</button>
+          </div>
+        </div>
+      </div>
+      <h2 class="section-title">Categorías</h2>
+      <div class="categories-grid">
+        <div class="category-card category-cardio" onclick="showCategory('cardio')"><div class="category-icon">🏃</div><h3>Cardio</h3><span>12 rutinas</span></div>
+        <div class="category-card category-strength" onclick="showCategory('strength')"><div class="category-icon">💪</div><h3>Fuerza</h3><span>18 rutinas</span></div>
+        <div class="category-card category-flex" onclick="showCategory('flex')"><div class="category-icon">🧘</div><h3>Flexibilidad</h3><span>8 rutinas</span></div>
+        <div class="category-card category-balance" onclick="showCategory('balance')"><div class="category-icon">⚖️</div><h3>Equilibrio</h3><span>6 rutinas</span></div>
+      </div>
+      <h2 class="section-title">Generar con IA</h2>
+      <div class="glass-card" style="cursor:pointer" onclick="openAIWorkout()">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:44px;height:44px;border-radius:50%;background:rgba(0,212,170,0.2);display:flex;align-items:center;justify-content:center;font-size:20px">🤖</div>
+          <div><h3 style="font-size:15px;font-weight:600">Crear rutina con IA</h3><p style="font-size:12px;color:var(--text-secondary)">Genera una rutina personalizada según tus objetivos</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN: HEALTH -->
+    <section id="screen-health" class="screen">
+      <div class="screen-header"><p class="screen-subtitle">Bienestar General</p><h1 class="screen-title">Salud</h1></div>
+      <div class="glass-card health-card">
+        <h2 class="card-title">Sueño</h2>
+        <div class="sleep-graph"><svg viewBox="0 0 300 60" class="sleep-svg"><defs><linearGradient id="sleepGrad" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#7B61FF" stop-opacity="0.3"/><stop offset="100%" stop-color="#7B61FF" stop-opacity="0"/></linearGradient></defs><path d="M0,50 Q30,20 60,35 T120,15 T180,25 T240,10 T300,20 L300,60 L0,60 Z" fill="url(#sleepGrad)"/><path d="M0,50 Q30,20 60,35 T120,15 T180,25 T240,10 T300,20" fill="none" stroke="#7B61FF" stroke-width="2"/></svg></div>
+        <div class="health-stats-row"><span>Anoche: 7h 42m • Calidad: 85%</span><span class="health-big-value">7h 42m</span></div>
+      </div>
+      <div class="health-grid">
+        <div class="glass-card health-small-card">
+          <h3>Ritmo Cardíaco</h3>
+          <div class="health-value health-heart" id="heartRate">72<span>bpm</span></div>
+          <div class="mini-graph"><svg viewBox="0 0 100 30"><path d="M0,15 L10,15 L15,5 L20,25 L25,10 L30,15 L40,15 L45,8 L50,20 L55,12 L60,15 L70,15 L75,6 L80,18 L85,10 L90,15 L100,15" fill="none" stroke="#FF6B6B" stroke-width="1.5"/></svg></div>
+          <span class="health-detail">Promedio: 68 bpm</span>
+        </div>
+        <div class="glass-card health-small-card">
+          <h3>Peso</h3>
+          <div class="health-value health-weight" id="weightValue">74.2<span>kg</span></div>
+          <div class="mini-graph"><svg viewBox="0 0 100 30"><path d="M0,20 L15,18 L30,19 L45,14 L60,15 L75,10 L90,12 L100,10" fill="none" stroke="#4ECDC4" stroke-width="1.5"/></svg></div>
+          <span class="health-detail" id="weightChange">-0.8 kg esta semana</span>
+        </div>
+      </div>
+      <div class="glass-card stress-card">
+        <h2 class="card-title">Nivel de Estrés</h2>
+        <div class="stress-gauge"><div class="stress-bar-bg"><div class="stress-bar-fill" id="stressBar" style="width:40%"></div></div></div>
+        <div class="stress-info"><span id="stressText">Moderado • 40%</span><span class="stress-status" id="stressStatus">Bien</span></div>
+        <div class="stress-recommendation"><span>🧘</span><span id="stressRec">Recomendado: Meditación 10 min</span></div>
+      </div>
+      <div class="glass-card bmi-card">
+        <h2 class="card-title">IMC</h2>
+        <div class="bmi-value"><span class="bmi-number" id="bmiNumber">22.4</span><span class="bmi-status" id="bmiStatus">Normal</span></div>
+        <div class="bmi-scale"><div class="bmi-segment bmi-under"></div><div class="bmi-segment bmi-normal"></div><div class="bmi-segment bmi-over"></div><div class="bmi-marker" id="bmiMarker" style="left:40%"></div></div>
+        <div class="bmi-labels"><span>Bajo</span><span>Normal</span><span>Sobrepeso</span></div>
+      </div>
+    </section>
+
+    <!-- SCREEN: PROFILE -->
+    <section id="screen-profile" class="screen">
+      <div class="profile-header">
+        <div class="profile-avatar"><div class="avatar-ring"></div><span id="avatarLetter">A</span></div>
+        <h1 class="profile-name" id="profileName">Alex Martínez</h1>
+        <p class="profile-since" id="profileSince">Miembro desde Enero 2026</p>
+      </div>
+      <div class="profile-stats-row">
+        <div class="glass-card profile-stat-card"><span class="profile-stat-value" id="ageValue">28</span><span class="profile-stat-label">Años</span></div>
+        <div class="glass-card profile-stat-card"><span class="profile-stat-value" id="heightValue">182</span><span class="profile-stat-label">cm</span></div>
+        <div class="glass-card profile-stat-card"><span class="profile-stat-value" id="weightValue2">74.2</span><span class="profile-stat-label">kg</span></div>
+      </div>
+      <div class="glass-card" id="profileSummary" style="padding:16px;margin-bottom:16px">
+        <div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:8px">📝 Resumen de tu perfil</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;color:var(--text-secondary)">
+          <div>🎯 Cargando...</div>
+        </div>
+      </div>
+      <h2 class="section-title">Mis Objetivos</h2>
+      <div class="glass-card goal-card"><div class="goal-info"><h3>Peso Objetivo</h3><p>Meta: <span id="goalWeight">70</span> kg</p></div><span class="goal-value goal-weight" id="goalWeightDiff">-4.2 kg</span></div>
+      <div class="glass-card goal-card"><div class="goal-info"><h3>Calorías Diarias</h3><p>Meta: <span id="goalCal">2,000</span> kcal</p></div><span class="goal-value goal-cal" id="goalCalDisplay">2,000 kcal</span></div>
+      <div class="glass-card goal-card"><div class="goal-info"><h3>Pasos Diarios</h3><p>Meta: <span id="goalSteps">10,000</span> pasos</p></div><span class="goal-value goal-steps" id="goalStepsDisplay">10,000</span></div>
+      <h2 class="section-title">Configuración</h2>
+      <div class="glass-card setting-card" onclick="toggleSetting(this)"><span class="setting-icon">🔔</span><span class="setting-label">Notificaciones</span><div class="toggle-switch active"><div class="toggle-knob"></div></div></div>
+      <div class="glass-card setting-card" onclick="openUnitsModal()"><span class="setting-icon">📏</span><span class="setting-label">Unidades de Medida</span><span class="setting-arrow">›</span></div>
+      <div class="glass-card setting-card" onclick="toggleSetting(this)"><span class="setting-icon">🌙</span><span class="setting-label">Modo Oscuro</span><div class="toggle-switch active"><div class="toggle-knob"></div></div></div>
+      <h2 class="section-title">Configuración de IA</h2>
+      <div class="glass-card" style="padding:20px">
+        <div style="margin-bottom:12px">
+          <label style="font-size:13px;color:var(--text-secondary);display:block;margin-bottom:6px">API Key de OpenAI</label>
+          <input type="password" class="api-key-input" id="apiKeyInput" placeholder="sk-..." onchange="saveApiKey()">
+        </div>
+        <div class="api-key-status" id="apiKeyStatus">Introduce tu API key para activar la IA</div>
+        <div style="margin-top:12px;font-size:11px;color:var(--text-tertiary);line-height:1.5">Tu API key se guarda solo en tu navegador. La app hace llamadas directas a la API de OpenAI desde tu dispositivo.</div>
+      </div>
+      <div class="glass-card setting-card" onclick="openProfileModal()"><span class="setting-icon">👤</span><span class="setting-label">Editar Perfil</span><span class="setting-arrow">›</span></div>
+      <div class="glass-card setting-card" onclick="resetData()"><span class="setting-icon">🗑️</span><span class="setting-label">Restablecer Datos</span><span class="setting-arrow">›</span></div>
+    </section>
+
+    <!-- SCREEN: AI CHAT -->
+    <section id="screen-ai-chat" class="screen">
+      <div class="screen-header"><p class="screen-subtitle">Asistente Inteligente</p><h1 class="screen-title">Chat con IA</h1></div>
+      <div class="ai-suggestions" id="aiSuggestions">
+        <span class="ai-suggestion-chip" onclick="sendQuickMessage('¿Qué debería comer después de entrenar?')">Post-entreno</span>
+        <span class="ai-suggestion-chip" onclick="sendQuickMessage('Dame consejos para dormir mejor')">Dormir mejor</span>
+        <span class="ai-suggestion-chip" onclick="sendQuickMessage('¿Cuánta proteína necesito al día?')">Proteínas</span>
+        <span class="ai-suggestion-chip" onclick="sendQuickMessage('Crea un plan de comidas saludable para hoy')">Plan de comidas</span>
+      </div>
+      <div class="glass-card" style="padding:16px;height:calc(100vh - 280px);display:flex;flex-direction:column">
+        <div class="ai-messages" id="aiMessages"></div>
+        <div class="ai-input-area">
+          <input type="text" id="aiChatInput" placeholder="Pregunta sobre nutrición, ejercicio..." onkeypress="if(event.key==='Enter')sendAIMessage()">
+          <button onclick="sendAIMessage()" id="aiSendBtn">Enviar</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN: AI MEAL ANALYZER -->
+    <section id="screen-ai-meal" class="screen">
+      <div class="screen-header"><p class="screen-subtitle">Inteligencia Artificial</p><h1 class="screen-title">Analizar Comida</h1></div>
+      <div class="glass-card" style="padding:20px">
+        <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;line-height:1.6">Describe lo que comiste con el mayor detalle posible. La IA calculará calorías, proteínas, carbohidratos y grasas estimadas.</p>
+        <div class="form-group">
+          <label>Descripción de la comida</label>
+          <textarea id="mealAnalyzerInput" rows="4" placeholder="Ej: Un plato de pasta con salsa boloñesa, queso parmesano rallado, y una copa de vino tinto..."></textarea>
+        </div>
+        <button class="btn-save" style="width:100%;margin-top:8px" onclick="analyzeMealWithAI()" id="analyzeMealBtn">🔍 Analizar Comida</button>
+        <div id="mealAnalyzerResult" style="margin-top:16px"></div>
+      </div>
+    </section>
+
+    <!-- SCREEN: AI WORKOUT -->
+    <section id="screen-ai-workout" class="screen">
+      <div class="screen-header"><p class="screen-subtitle">Inteligencia Artificial</p><h1 class="screen-title">Generar Rutina</h1></div>
+      <div class="glass-card" style="padding:20px">
+        <div class="form-group">
+          <label>Tipo de entrenamiento</label>
+          <select id="workoutType"><option value="strength">Fuerza / Musculación</option><option value="cardio">Cardio / Resistencia</option><option value="hiit">HIIT</option><option value="flexibility">Flexibilidad / Movilidad</option><option value="mixed">Mixto</option></select>
+        </div>
+        <div class="form-group">
+          <label>Nivel de experiencia</label>
+          <select id="workoutLevel"><option value="beginner">Principiante</option><option value="intermediate">Intermedio</option><option value="advanced">Avanzado</option></select>
+        </div>
+        <div class="form-group">
+          <label>Duración (minutos)</label>
+          <select id="workoutDuration"><option value="30">30 min</option><option value="45" selected>45 min</option><option value="60">60 min</option><option value="90">90 min</option></select>
+        </div>
+        <div class="form-group">
+          <label>Equipo disponible (opcional)</label>
+          <input type="text" id="workoutEquipment" placeholder="Ej: Mancuernas, barra, cinta de correr...">
+        </div>
+        <button class="btn-save" style="width:100%;margin-top:8px" onclick="generateWorkoutWithAI()" id="generateWorkoutBtn">⚡ Generar Rutina</button>
+        <div id="workoutGeneratorResult" style="margin-top:16px"></div>
+      </div>
+    </section>
+
+    <!-- SCREEN: AI RECIPES -->
+    <section id="screen-ai-recipes" class="screen">
+      <div class="screen-header"><p class="screen-subtitle">Inteligencia Artificial</p><h1 class="screen-title">Recetas Saludables</h1></div>
+      <div class="glass-card" style="padding:20px">
+        <div class="form-group">
+          <label>Tipo de receta</label>
+          <select id="recipeType"><option value="any">Cualquiera</option><option value="breakfast">Desayuno</option><option value="lunch">Almuerzo</option><option value="dinner">Cena</option><option value="snack">Snack</option></select>
+        </div>
+        <div class="form-group">
+          <label>Restricciones / Preferencias</label>
+          <input type="text" id="recipePrefs" placeholder="Ej: Vegetariano, sin gluten, bajo en carbohidratos...">
+        </div>
+        <div class="form-group">
+          <label>Calorías máximas por porción</label>
+          <input type="number" id="recipeMaxCal" placeholder="Ej: 500" value="500">
+        </div>
+        <button class="btn-save" style="width:100%;margin-top:8px" onclick="generateRecipeWithAI()" id="generateRecipeBtn">🍳 Generar Receta</button>
+        <div id="recipeGeneratorResult" style="margin-top:16px"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <nav class="bottom-nav">
+    <button class="nav-item active" data-screen="home" onclick="switchScreen('home')"><span class="nav-icon">🏠</span><span class="nav-label">Inicio</span></button>
+    <button class="nav-item" data-screen="meals" onclick="switchScreen('meals')"><span class="nav-icon">🍽️</span><span class="nav-label">Comidas</span></button>
+    <button class="nav-item" data-screen="exercise" onclick="switchScreen('exercise')"><span class="nav-icon">💪</span><span class="nav-label">Ejercicio</span></button>
+    <button class="nav-item" data-screen="health" onclick="switchScreen('health')"><span class="nav-icon">❤️</span><span class="nav-label">Salud</span></button>
+    <button class="nav-item" data-screen="profile" onclick="switchScreen('profile')"><span class="nav-icon">👤</span><span class="nav-label">Perfil</span></button>
+  </nav>
+  <div class="home-indicator"></div>
+
+  <!-- Add Meal Modal -->
+  <div id="addMealModal" class="modal">
+    <div class="modal-overlay" onclick="closeAddMealModal()"></div>
+    <div class="modal-content glass-card">
+      <h2>Registrar Comida</h2>
+      <div class="form-group"><label>Tipo de comida</label><select id="mealType"><option value="breakfast">Desayuno</option><option value="lunch">Almuerzo</option><option value="snack">Snack</option><option value="dinner">Cena</option></select></div>
+      <div class="form-group"><label>Descripción</label><input type="text" id="mealDesc" placeholder="Ej: Ensalada de pollo"></div>
+      <div class="form-group"><label>Calorías</label><input type="number" id="mealCalories" placeholder="Ej: 450"></div>
+      <div class="form-group"><label>Proteínas (g)</label><input type="number" id="mealProtein" placeholder="Ej: 30"></div>
+      <div class="form-group"><label>Carbohidratos (g)</label><input type="number" id="mealCarbs" placeholder="Ej: 45"></div>
+      <div class="form-group"><label>Grasas (g)</label><input type="number" id="mealFats" placeholder="Ej: 15"></div>
+      <div class="modal-buttons"><button class="btn-cancel" onclick="closeAddMealModal()">Cancelar</button><button class="btn-save" onclick="saveMeal()">Guardar</button></div>
     </div>
+  </div>
 
-    <script src="app.js"></script>
+  <!-- Profile Edit Modal -->
+  <div id="profileModal" class="modal">
+    <div class="modal-overlay" onclick="closeProfileModal()"></div>
+    <div class="modal-content glass-card">
+      <h2>Editar Perfil</h2>
+      <div class="form-group"><label>Nombre</label><input type="text" id="editName" placeholder="Tu nombre"></div>
+      <div class="form-group"><label>Edad</label><input type="number" id="editAge" placeholder="28"></div>
+      <div class="form-group"><label>Altura (cm)</label><input type="number" id="editHeight" placeholder="182"></div>
+      <div class="form-group"><label>Peso (kg)</label><input type="number" id="editWeight" placeholder="74.2" step="0.1"></div>
+      <div class="form-group"><label>Peso objetivo (kg)</label><input type="number" id="editGoalWeight" placeholder="70" step="0.1"></div>
+      <div class="form-group"><label>Meta calorías</label><input type="number" id="editGoalCal" placeholder="2000"></div>
+      <div class="form-group"><label>Meta pasos</label><input type="number" id="editGoalSteps" placeholder="10000"></div>
+      <div class="modal-buttons"><button class="btn-cancel" onclick="closeProfileModal()">Cancelar</button><button class="btn-save" onclick="saveProfile()">Guardar</button></div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+</div>
+<script src="app.js"></script>
 </body>
 </html>
