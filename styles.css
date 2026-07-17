@@ -1298,3 +1298,159 @@ body {
     width: 20px;
     height: 20px;
 }
+
+/* ========== INLINE SVG ICONS ========== */
+.inline-icon {
+    display: inline-block;
+    vertical-align: middle;
+    flex-shrink: 0;
+}
+
+/* Status bar inline icons */
+.status-icon {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Button inline icons */
+.btn-icon {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    fill: none;
+    flex-shrink: 0;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Navigation inline icons */
+.nav-item svg {
+    width: 24px;
+    height: 24px;
+    stroke: currentColor;
+    fill: none;
+    display: block;
+    margin: 0 auto;
+    transition: stroke 0.2s;
+}
+
+.nav-item.active svg {
+    stroke: var(--accent-purple);
+    filter: drop-shadow(0 0 6px rgba(123, 97, 255, 0.4));
+}
+
+/* Meal inline icons */
+.meal-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: currentColor;
+    fill: none;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Category inline icons */
+.category-icon svg {
+    width: 26px;
+    height: 26px;
+    stroke: currentColor;
+    fill: none;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Suggestion inline icon */
+.suggestion-icon {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    fill: none;
+    flex-shrink: 0;
+    color: var(--accent-orange);
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Recommendation inline icon */
+.rec-icon {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    fill: none;
+    flex-shrink: 0;
+    color: var(--accent-teal);
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Setting inline icons */
+.setting-icon-svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    fill: none;
+    margin-right: 12px;
+    flex-shrink: 0;
+    color: var(--text-secondary);
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.setting-arrow-svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    fill: none;
+    color: var(--text-tertiary);
+    flex-shrink: 0;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Play button inline icon */
+.start-workout-btn svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+    stroke: none;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 6px;
+}
+
+/* Add water button */
+.add-water-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.add-water-btn svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Add meal button */
+.add-meal-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.add-meal-btn svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    fill: none;
+    display: inline-block;
+    vertical-align: middle;
+}
