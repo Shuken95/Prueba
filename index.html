@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#0F0F23">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="description" content="Wellness Glassmorphic - Control de salud, alimentación y ejercicio">
+
+    <title>Wellness Glass</title>
+
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="icon" type="image/png" href="icons/icon-192.png">
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <span class="status-time" id="statusTime">9:41</span>
+            <div class="status-icons">
+                <span>📶</span>
+                <span>📡</span>
+                <span>🔋</span>
+            </div>
+        </div>
+
+        <!-- Screens Container -->
+        <main class="screens-container">
+
+            <!-- ========== SCREEN: HOME ========== -->
+            <section id="screen-home" class="screen active">
+                <div class="screen-header">
+                    <p class="screen-subtitle">Viernes, 17 de Julio</p>
+                    <h1 class="screen-title">Buenos días, Alex</h1>
+                </div>
+
+                <!-- Dashboard Card -->
+                <div class="glass-card dashboard-card">
+                    <h2 class="card-title">Resumen Diario</h2>
+
+                    <div class="dashboard-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">CALORÍAS</span>
+                            <span class="stat-value" id="calValue">1,240</span>
+                            <span class="stat-goal">/ 2,000 kcal</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill progress-cal" style="width: 62%"></div>
+                            </div>
+                        </div>
+
+                        <div class="stat-item">
+                            <span class="stat-label">AGUA</span>
+                            <span class="stat-value" id="waterValue">1.5L</span>
+                            <span class="stat-goal">/ 2.5L</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill progress-water" style="width: 60%"></div>
+                            </div>
+                            <button class="add-water-btn" onclick="addWater()">+ Añadir 250ml</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity Card -->
+                <div class="glass-card activity-card">
+                    <h2 class="card-title">Actividad</h2>
+                    <div class="activity-content">
+                        <div class="activity-stats">
+                            <div>
+                                <span class="stat-label">PASOS</span>
+                                <span class="stat-value" id="stepsValue">8,432</span>
+                            </div>
+                            <div>
+                                <span class="stat-label">EJERCICIO</span>
+                                <span class="stat-value">45 min</span>
+                            </div>
+                        </div>
+                        <div class="activity-rings">
+                            <svg viewBox="0 0 120 120" class="rings-svg">
+                                <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="10"/>
+                                <circle cx="60" cy="60" r="50" fill="none" stroke="url(#gradCal)" stroke-width="10" 
+                                    stroke-dasharray="314" stroke-dashoffset="100" stroke-linecap="round" 
+                                    transform="rotate(-90 60 60)"/>
+                                <circle cx="60" cy="60" r="36" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="10"/>
+                                <circle cx="60" cy="60" r="36" fill="none" stroke="url(#gradSteps)" stroke-width="10" 
+                                    stroke-dasharray="226" stroke-dashoffset="60" stroke-linecap="round" 
+                                    transform="rotate(-90 60 60)"/>
+                                <circle cx="60" cy="60" r="22" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="10"/>
+                                <circle cx="60" cy="60" r="22" fill="none" stroke="#00D4AA" stroke-width="10" 
+                                    stroke-dasharray="138" stroke-dashoffset="35" stroke-linecap="round" 
+                                    transform="rotate(-90 60 60)"/>
+                                <defs>
+                                    <linearGradient id="gradCal" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="#FF6B6B"/>
+                                        <stop offset="100%" stop-color="#FF8E53"/>
+                                    </linearGradient>
+                                    <linearGradient id="gradSteps" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="#7B61FF"/>
+                                        <stop offset="100%" stop-color="#A855F7"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nutrition Card -->
+                <div class="glass-card nutrition-card">
+                    <h2 class="card-title">Nutrición Hoy</h2>
+                    <div class="macro-grid">
+                        <div class="macro-item">
+                            <span class="macro-label">Proteínas</span>
+                            <span class="macro-value" id="proteinValue">85g</span>
+                            <div class="macro-bar"><div class="macro-fill macro-protein" style="width: 72%"></div></div>
+                        </div>
+                        <div class="macro-item">
+                            <span class="macro-label">Carbos</span>
+                            <span class="macro-value" id="carbsValue">142g</span>
+                            <div class="macro-bar"><div class="macro-fill macro-carbs" style="width: 78%"></div></div>
+                        </div>
+                        <div class="macro-item">
+                            <span class="macro-label">Grasas</span>
+                            <span class="macro-value" id="fatsValue">48g</span>
+                            <div class="macro-bar"><div class="macro-fill macro-fats" style="width: 56%"></div></div>
+                        </div>
+                    </div>
+                    <div class="meal-suggestion">
+                        <span>🍽️</span>
+                        <span>Próxima comida: Pollo al limón + quinoa</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========== SCREEN: MEALS ========== -->
+            <section id="screen-meals" class="screen">
+                <div class="screen-header">
+                    <p class="screen-subtitle">Control Alimenticio</p>
+                    <h1 class="screen-title">Mis Comidas</h1>
+                </div>
+
+                <button class="add-meal-btn" onclick="openAddMealModal()">
+                    <span>+</span> Registrar Nueva Comida
+                </button>
+
+                <div class="meals-list" id="mealsList">
+                    <div class="meal-card" data-meal="breakfast">
+                        <div class="meal-icon">🌅</div>
+                        <div class="meal-info">
+                            <h3>Desayuno</h3>
+                            <p>Avena con frutas, café negro</p>
+                            <span class="meal-time">7:30 AM • 420 kcal</span>
+                        </div>
+                        <div class="meal-calories">420<span>kcal</span></div>
+                    </div>
+
+                    <div class="meal-card" data-meal="lunch">
+                        <div class="meal-icon">☀️</div>
+                        <div class="meal-info">
+                            <h3>Almuerzo</h3>
+                            <p>Ensalada César con pollo</p>
+                            <span class="meal-time">1:00 PM • 580 kcal</span>
+                        </div>
+                        <div class="meal-calories">580<span>kcal</span></div>
+                    </div>
+
+                    <div class="meal-card" data-meal="snack">
+                        <div class="meal-icon">🥜</div>
+                        <div class="meal-info">
+                            <h3>Snack</h3>
+                            <p>Yogur griego con nueces</p>
+                            <span class="meal-time">4:30 PM • 180 kcal</span>
+                        </div>
+                        <div class="meal-calories">180<span>kcal</span></div>
+                    </div>
+
+                    <div class="meal-card" data-meal="dinner">
+                        <div class="meal-icon">🌙</div>
+                        <div class="meal-info">
+                            <h3>Cena</h3>
+                            <p>Salmón a la parrilla, brócoli</p>
+                            <span class="meal-time">8:00 PM • 520 kcal</span>
+                        </div>
+                        <div class="meal-calories">520<span>kcal</span></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========== SCREEN: EXERCISE ========== -->
+            <section id="screen-exercise" class="screen">
+                <div class="screen-header">
+                    <p class="screen-subtitle">Rutina de Hoy</p>
+                    <h1 class="screen-title">Ejercicio</h1>
+                </div>
+
+                <div class="glass-card workout-card">
+                    <h2 class="card-title">Entrenamiento de Hoy</h2>
+                    <p class="workout-subtitle">Fuerza Superior • 45 min</p>
+                    <div class="exercise-list">
+                        <div class="exercise-item">
+                            <span>1. Press de banca</span>
+                            <span class="exercise-sets">4x12</span>
+                        </div>
+                        <div class="exercise-item">
+                            <span>2. Dominadas</span>
+                            <span class="exercise-sets">3x10</span>
+                        </div>
+                        <div class="exercise-item">
+                            <span>3. Fondos en paralelas</span>
+                            <span class="exercise-sets">3x12</span>
+                        </div>
+                    </div>
+                    <button class="start-workout-btn" onclick="startWorkout()">▶ Iniciar Entrenamiento</button>
+                </div>
+
+                <h2 class="section-title">Categorías</h2>
+                <div class="categories-grid">
+                    <div class="category-card category-cardio" onclick="showCategory('cardio')">
+                        <div class="category-icon">🏃</div>
+                        <h3>Cardio</h3>
+                        <span>12 rutinas</span>
+                    </div>
+                    <div class="category-card category-strength" onclick="showCategory('strength')">
+                        <div class="category-icon">💪</div>
+                        <h3>Fuerza</h3>
+                        <span>18 rutinas</span>
+                    </div>
+                    <div class="category-card category-flex" onclick="showCategory('flex')">
+                        <div class="category-icon">🧘</div>
+                        <h3>Flexibilidad</h3>
+                        <span>8 rutinas</span>
+                    </div>
+                    <div class="category-card category-balance" onclick="showCategory('balance')">
+                        <div class="category-icon">⚖️</div>
+                        <h3>Equilibrio</h3>
+                        <span>6 rutinas</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========== SCREEN: HEALTH ========== -->
+            <section id="screen-health" class="screen">
+                <div class="screen-header">
+                    <p class="screen-subtitle">Bienestar General</p>
+                    <h1 class="screen-title">Salud</h1>
+                </div>
+
+                <!-- Sleep Card -->
+                <div class="glass-card health-card">
+                    <h2 class="card-title">Sueño</h2>
+                    <div class="sleep-graph">
+                        <svg viewBox="0 0 300 60" class="sleep-svg">
+                            <defs>
+                                <linearGradient id="sleepGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#7B61FF" stop-opacity="0.3"/>
+                                    <stop offset="100%" stop-color="#7B61FF" stop-opacity="0"/>
+                                </linearGradient>
+                            </defs>
+                            <path d="M0,50 Q30,20 60,35 T120,15 T180,25 T240,10 T300,20 L300,60 L0,60 Z" fill="url(#sleepGrad)"/>
+                            <path d="M0,50 Q30,20 60,35 T120,15 T180,25 T240,10 T300,20" fill="none" stroke="#7B61FF" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <div class="health-stats-row">
+                        <span>Anoche: 7h 42m • Calidad: 85%</span>
+                        <span class="health-big-value">7h 42m</span>
+                    </div>
+                </div>
+
+                <!-- Health Stats Grid -->
+                <div class="health-grid">
+                    <div class="glass-card health-small-card">
+                        <h3>Ritmo Cardíaco</h3>
+                        <div class="health-value health-heart">72<span>bpm</span></div>
+                        <div class="mini-graph heart-graph">
+                            <svg viewBox="0 0 100 30">
+                                <path d="M0,15 L10,15 L15,5 L20,25 L25,10 L30,15 L40,15 L45,8 L50,20 L55,12 L60,15 L70,15 L75,6 L80,18 L85,10 L90,15 L100,15" 
+                                    fill="none" stroke="#FF6B6B" stroke-width="1.5"/>
+                            </svg>
+                        </div>
+                        <span class="health-detail">Promedio: 68 bpm</span>
+                    </div>
+
+                    <div class="glass-card health-small-card">
+                        <h3>Peso</h3>
+                        <div class="health-value health-weight">74.2<span>kg</span></div>
+                        <div class="mini-graph weight-graph">
+                            <svg viewBox="0 0 100 30">
+                                <path d="M0,20 L15,18 L30,19 L45,14 L60,15 L75,10 L90,12 L100,10" 
+                                    fill="none" stroke="#4ECDC4" stroke-width="1.5"/>
+                            </svg>
+                        </div>
+                        <span class="health-detail">-0.8 kg esta semana</span>
+                    </div>
+                </div>
+
+                <!-- Stress Card -->
+                <div class="glass-card stress-card">
+                    <h2 class="card-title">Nivel de Estrés</h2>
+                    <div class="stress-gauge">
+                        <div class="stress-bar-bg">
+                            <div class="stress-bar-fill" style="width: 40%"></div>
+                        </div>
+                    </div>
+                    <div class="stress-info">
+                        <span>Moderado • 40%</span>
+                        <span class="stress-status">Bien</span>
+                    </div>
+                    <div class="stress-recommendation">
+                        <span>🧘</span>
+                        <span>Recomendado: Meditación 10 min</span>
+                    </div>
+                </div>
+
+                <!-- BMI Card -->
+                <div class="glass-card bmi-card">
+                    <h2 class="card-title">IMC</h2>
+                    <div class="bmi-value">
+                        <span class="bmi-number">22.4</span>
+                        <span class="bmi-status">Normal</span>
+                    </div>
+                    <div class="bmi-scale">
+                        <div class="bmi-segment bmi-under"></div>
+                        <div class="bmi-segment bmi-normal"></div>
+                        <div class="bmi-segment bmi-over"></div>
+                        <div class="bmi-marker" style="left: 40%"></div>
+                    </div>
+                    <div class="bmi-labels">
+                        <span>Bajo</span>
+                        <span>Normal</span>
+                        <span>Sobrepeso</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========== SCREEN: PROFILE ========== -->
+            <section id="screen-profile" class="screen">
+                <div class="profile-header">
+                    <div class="profile-avatar">
+                        <div class="avatar-ring"></div>
+                        <span>A</span>
+                    </div>
+                    <h1 class="profile-name">Alex Martínez</h1>
+                    <p class="profile-since">Miembro desde Enero 2026</p>
+                </div>
+
+                <div class="profile-stats-row">
+                    <div class="glass-card profile-stat-card">
+                        <span class="profile-stat-value">28</span>
+                        <span class="profile-stat-label">Años</span>
+                    </div>
+                    <div class="glass-card profile-stat-card">
+                        <span class="profile-stat-value">182</span>
+                        <span class="profile-stat-label">cm</span>
+                    </div>
+                    <div class="glass-card profile-stat-card">
+                        <span class="profile-stat-value">74.2</span>
+                        <span class="profile-stat-label">kg</span>
+                    </div>
+                </div>
+
+                <h2 class="section-title">Mis Objetivos</h2>
+
+                <div class="glass-card goal-card">
+                    <div class="goal-info">
+                        <h3>Peso Objetivo</h3>
+                        <p>Meta: 70 kg</p>
+                    </div>
+                    <span class="goal-value goal-weight">-4.2 kg</span>
+                </div>
+
+                <div class="glass-card goal-card">
+                    <div class="goal-info">
+                        <h3>Calorías Diarias</h3>
+                        <p>Meta: 2,000 kcal</p>
+                    </div>
+                    <span class="goal-value goal-cal">2,000 kcal</span>
+                </div>
+
+                <div class="glass-card goal-card">
+                    <div class="goal-info">
+                        <h3>Pasos Diarios</h3>
+                        <p>Meta: 10,000 pasos</p>
+                    </div>
+                    <span class="goal-value goal-steps">10,000</span>
+                </div>
+
+                <h2 class="section-title">Configuración</h2>
+
+                <div class="glass-card setting-card" onclick="toggleSetting(this)">
+                    <span class="setting-icon">🔔</span>
+                    <span class="setting-label">Notificaciones</span>
+                    <div class="toggle-switch active">
+                        <div class="toggle-knob"></div>
+                    </div>
+                </div>
+
+                <div class="glass-card setting-card" onclick="toggleSetting(this)">
+                    <span class="setting-icon">📏</span>
+                    <span class="setting-label">Unidades de Medida</span>
+                    <span class="setting-arrow">›</span>
+                </div>
+
+                <div class="glass-card setting-card" onclick="toggleSetting(this)">
+                    <span class="setting-icon">🌙</span>
+                    <span class="setting-label">Modo Oscuro</span>
+                    <div class="toggle-switch active">
+                        <div class="toggle-knob"></div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" data-screen="home" onclick="switchScreen('home')">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-label">Inicio</span>
+            </button>
+            <button class="nav-item" data-screen="meals" onclick="switchScreen('meals')">
+                <span class="nav-icon">🍽️</span>
+                <span class="nav-label">Comidas</span>
+            </button>
+            <button class="nav-item" data-screen="exercise" onclick="switchScreen('exercise')">
+                <span class="nav-icon">💪</span>
+                <span class="nav-label">Ejercicio</span>
+            </button>
+            <button class="nav-item" data-screen="health" onclick="switchScreen('health')">
+                <span class="nav-icon">❤️</span>
+                <span class="nav-label">Salud</span>
+            </button>
+            <button class="nav-item" data-screen="profile" onclick="switchScreen('profile')">
+                <span class="nav-icon">👤</span>
+                <span class="nav-label">Perfil</span>
+            </button>
+        </nav>
+
+        <!-- Home Indicator -->
+        <div class="home-indicator"></div>
+
+        <!-- Add Meal Modal -->
+        <div id="addMealModal" class="modal">
+            <div class="modal-overlay" onclick="closeAddMealModal()"></div>
+            <div class="modal-content glass-card">
+                <h2>Registrar Comida</h2>
+                <div class="form-group">
+                    <label>Tipo de comida</label>
+                    <select id="mealType">
+                        <option value="breakfast">Desayuno</option>
+                        <option value="lunch">Almuerzo</option>
+                        <option value="snack">Snack</option>
+                        <option value="dinner">Cena</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <input type="text" id="mealDesc" placeholder="Ej: Ensalada de pollo">
+                </div>
+                <div class="form-group">
+                    <label>Calorías</label>
+                    <input type="number" id="mealCalories" placeholder="Ej: 450">
+                </div>
+                <div class="modal-buttons">
+                    <button class="btn-cancel" onclick="closeAddMealModal()">Cancelar</button>
+                    <button class="btn-save" onclick="saveMeal()">Guardar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Notification -->
+        <div id="toast" class="toast"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
