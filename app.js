@@ -172,8 +172,6 @@ function getTrainingFocusLabel() {
 // ========== SCREEN NAVIGATION ==========
 const SCREEN_ORDER = ['home', 'meals', 'exercise', 'health', 'profile'];
 let currentScreenIndex = 0;
-let isScrolling = false;
-let scrollTimeout = null;
 
 function getScreenIndex(screenName) {
   return SCREEN_ORDER.indexOf(screenName);
@@ -188,59 +186,39 @@ function switchScreen(screenName) {
   const screenWidth = container.clientWidth;
   container.scrollTo({ left: idx * screenWidth, behavior: 'smooth' });
 
-  document.querySelectorAll('.screen').forEach((s, i) => {
-    if (i === idx) s.classList.add('active');
-    else s.classList.remove('active');
-  });
-
   document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
   const nav = document.querySelector('.nav-item[data-screen="' + screenName + '"]');
   if (nav) nav.classList.add('active');
 
-  // Update content for the new screen
   if (screenName === 'home') updateHome();
   if (screenName === 'meals') renderMeals();
   if (screenName === 'health') updateHealth();
   if (screenName === 'profile') updateProfile();
 }
 
-function syncNavFromScroll() {
-  const container = document.querySelector('.screens-container');
-  const screenWidth = container.clientWidth;
-  const idx = Math.round(container.scrollLeft / screenWidth);
-  if (idx >= 0 && idx < SCREEN_ORDER.length && idx !== currentScreenIndex) {
-    currentScreenIndex = idx;
-    const screenName = SCREEN_ORDER[idx];
-
-    document.querySelectorAll('.screen').forEach((s, i) => {
-      if (i === idx) s.classList.add('active');
-      else s.classList.remove('active');
-    });
-
-    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-    const nav = document.querySelector('.nav-item[data-screen="' + screenName + '"]');
-    if (nav) nav.classList.add('active');
-
-    if (screenName === 'home') updateHome();
-    if (screenName === 'meals') renderMeals();
-    if (screenName === 'health') updateHealth();
-    if (screenName === 'profile') updateProfile();
-  }
-}
-
-// Handle scroll end to snap and sync
 function setupScrollSync() {
   const container = document.querySelector('.screens-container');
+  let scrollTimeout = null;
+
   container.addEventListener('scroll', function() {
-    isScrolling = true;
     if (scrollTimeout) clearTimeout(scrollTimeout);
     scrollTimeout = setTimeout(function() {
-      isScrolling = false;
-      syncNavFromScroll();
-    }, 150);
+      const screenWidth = container.clientWidth;
+      const idx = Math.round(container.scrollLeft / screenWidth);
+      if (idx >= 0 && idx < SCREEN_ORDER.length) {
+        currentScreenIndex = idx;
+        const screenName = SCREEN_ORDER[idx];
+        document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+        const nav = document.querySelector('.nav-item[data-screen="' + screenName + '"]');
+        if (nav) nav.classList.add('active');
+        if (screenName === 'home') updateHome();
+        if (screenName === 'meals') renderMeals();
+        if (screenName === 'health') updateHealth();
+        if (screenName === 'profile') updateProfile();
+      }
+    }, 100);
   });
 
-  // Handle resize to recalculate positions
   window.addEventListener('resize', function() {
     const screenWidth = container.clientWidth;
     container.scrollTo({ left: currentScreenIndex * screenWidth, behavior: 'auto' });

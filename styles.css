@@ -8,8 +8,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,SF Pro Display,Segoe UI,Roboto
 .status-icons{display:flex;gap:4px;font-size:12px}
 .screens-container{position:absolute;top:44px;left:0;right:0;bottom:90px;display:flex;flex-direction:row;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;scroll-behavior:smooth}
 .screens-container::-webkit-scrollbar{display:none}
-.screen{flex:0 0 100%;width:100%;height:100%;padding:0 20px 20px;padding-top:calc(8px + var(--safe-top));overflow-y:auto;scroll-snap-align:start;scroll-snap-stop:always;opacity:0;transform:translateX(20px);transition:opacity 0.3s ease,transform 0.3s ease}
-.screen.active{opacity:1;transform:translateX(0)}
+.screen{flex:0 0 100%;width:100%;height:100%;padding:0 20px 20px;padding-top:calc(8px + var(--safe-top));overflow-y:auto;scroll-snap-align:start;scroll-snap-stop:always;opacity:1;transform:translateX(0);transition:opacity 0.3s ease}
+.screen.active{opacity:1}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .screen-header{margin-bottom:16px}
 .screen-subtitle{font-size:13px;font-weight:500;color:var(--text-secondary);margin-bottom:4px}
@@ -218,7 +218,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,SF Pro Display,Segoe UI,Roboto
 
 
 /* Onboarding overlay - outside horizontal scroll */
-#screen-onboarding{position:fixed;inset:0;z-index:5000;background:var(--bg-deep);overflow-y:auto;-webkit-overflow-scrolling:touch}
+#screen-onboarding{position:fixed;inset:0;z-index:5000;background:var(--bg-deep);overflow-y:auto;-webkit-overflow-scrolling:touch;display:none}
 #screen-onboarding .screen-header{text-align:center;padding-top:60px}
 #screen-onboarding .glass-card{margin:0 20px 40px}
 
